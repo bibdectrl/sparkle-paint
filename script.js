@@ -1,8 +1,8 @@
 function AntWorld(width, height){
     this.width = width;
     this.height = height;
-    this.points = [];
     this.grid = [];
+    this.painting = true;
     for (var i = 0; i < this.width; i++){
         this.grid.push([]);
         for (var j = 0; j < this.height; j++){
@@ -21,10 +21,17 @@ function AntWorld(width, height){
         }
     };
     
-    this.undo = function(){
-        var p = this.points.pop();
-        if (p !== undefined)
-        this.grid[p.x][p.y] = 0;
+    this.toggle = function(){
+        if (this.painting){
+          this.painting = false;
+          erase.hide();
+          paint.show()
+        } else {
+          this.painting = true;
+          paint.hide();
+          erase.show();
+
+        }
     };
     
     this.reset = function(){
@@ -36,14 +43,14 @@ function AntWorld(width, height){
             }
         }
         this.grid = newGrid;
-        this.points = [];
     };
     
 }
 
 var antWorld;
 var reset;
-var undo;
+var erase;
+var paint;
 
 function setup(){
     width = 100;
@@ -53,11 +60,16 @@ function setup(){
     colorMode(HSB);
     antWorld = new AntWorld(width, height);
     reset = createButton('reset');
-    undo = createButton('undo');
+    erase = createButton('erase');
+    paint = createButton('paint');
     reset.position(20, 600);
     reset.mousePressed(function(){ antWorld.reset() });
-    undo.position(70, 600);
-    undo.mousePressed(function(){ antWorld.undo() });
+    erase.position(90, 600);
+    paint.position(90, 600);
+    paint.hide();
+    erase.mousePressed(function(){ antWorld.toggle() });
+    paint.mousePressed(function(){ antWorld.toggle() });
+
 }
 
 function draw(){
@@ -65,12 +77,16 @@ function draw(){
     if (mouseIsPressed){
         var x = Math.max(0, Math.floor(mouseX / cellsize));
         var y = Math.max(0, Math.floor(mouseY / cellsize));
-        try { 
+        if (antWorld.painting){ 
             if (antWorld.grid[x][y] == 0){
             antWorld.grid[x][y] = 1;
-            antWorld.points.unshift({x: x, y: y});
             }
-        } catch (e) { console.log(e)}
+        } else {
+            if (antWorld.grid[x][y] == 1){
+              antWorld.grid[x][y] = 0;
+            }
+
+        }
     }
     antWorld.draw();
 }
