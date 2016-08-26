@@ -6,13 +6,24 @@
         canvas {
             cursor: crosshair;
         }
+        button {
+            margin: 1em;
+        }
     </style>
     </head>
     <h1>Sparkle Paint</h1>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/addons/p5.dom.js"></script>
-        <script type="text/javascript" src="script.js">
-        </script>
-    </body>
+        <script type="text/javascript" src="script.js"></script>
+        <div id="canvasGoesHere"></div>
+        <div id="sliders">
+            <span id="red">RED</span>
+            <span id="green">GREEN</span>
+            <span id="blue">BLUE</span>
+        </div>
+        <div id="resetButton"></div>
+        <div id="paintButton"></div>
+        <div id="eraseButton"></div>
+        </body>
 </html>
