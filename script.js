@@ -106,10 +106,8 @@ function draw(){
     if (mouseIsPressed){
         var x = Math.max(0, Math.floor(mouseX / cellsize));
         var y = Math.max(0, Math.floor(mouseY / cellsize));
-        if (antWorld.painting){ 
-            if (antWorld.grid[x][y] === 0){
+        if (antWorld.painting){
             antWorld.grid[x][y] = new Pixel(x, y);
-            }
         } else {
             if (antWorld.grid[x][y] !== 0){
               antWorld.grid[x][y] = 0;
