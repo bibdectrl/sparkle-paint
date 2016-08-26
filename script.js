@@ -51,6 +51,9 @@ var antWorld;
 var reset;
 var erase;
 var paint;
+var width;
+var height;
+var cellssize;
 
 function setup(){
     width = 100;
