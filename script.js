@@ -1,3 +1,19 @@
+function Pixel(x, y) {
+    this.x = x;
+    this.y = y;
+    this.maxR = redSlider.value();
+    this.maxG = greenSlider.value();
+    this.maxB = blueSlider.value();
+    
+    this.show = function(){
+        fill(Math.floor(Math.random() * this.maxR), Math.floor(Math.random() * this.maxG), Math.floor(Math.random() * this.maxB));
+        rect(this.x * cellsize, this.y*cellsize, cellsize, cellsize);
+    }
+    
+}
+
+
+
 function AntWorld(width, height){
     this.width = width;
     this.height = height;
@@ -13,8 +29,8 @@ function AntWorld(width, height){
     this.draw = function(){
         for(var i = 0; i < this.width; i++){
             for(var j = 0; j < this.height; j++){
-                if (this.grid[i][j] == 1){
-                    fill(Math.floor(Math.random() * redSlider.value()), Math.floor(Math.random() * greenSlider.value()), Math.floor(Math.random() * blueSlider.value()));
+                if (this.grid[i][j] !== 0){
+                    this.grid[i][j].show();
                     rect(i*cellsize, j*cellsize, cellsize, cellsize);
                 }
             }
@@ -64,6 +80,7 @@ function setup(){
     cellsize = 10;
     createCanvas(width*cellsize, height*cellsize).parent("canvasGoesHere");
     colorMode(RGB);
+    noStroke();
     antWorld = new AntWorld(width, height);
     reset = createButton('reset');
     erase = createButton('erase');
@@ -90,11 +107,11 @@ function draw(){
         var x = Math.max(0, Math.floor(mouseX / cellsize));
         var y = Math.max(0, Math.floor(mouseY / cellsize));
         if (antWorld.painting){ 
-            if (antWorld.grid[x][y] == 0){
-            antWorld.grid[x][y] = 1;
+            if (antWorld.grid[x][y] === 0){
+            antWorld.grid[x][y] = new Pixel(x, y);
             }
         } else {
-            if (antWorld.grid[x][y] == 1){
+            if (antWorld.grid[x][y] !== 0){
               antWorld.grid[x][y] = 0;
             }
 
